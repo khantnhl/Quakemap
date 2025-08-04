@@ -3,10 +3,11 @@ import vertexai
 import json
 from typing import List, Dict, Any
 from typing_extensions import TypedDict
+import subprocess
 
 from vertexai.generative_models import Part
-from MMIRetriever import MMIRetriever
-from manage_model import get_response
+from services.MMIRetriever import MMIRetriever
+from services.manage_model import get_response
 
 from dotenv import load_dotenv
 from google.auth.transport.requests import Request
@@ -97,7 +98,7 @@ SEISMIC_ANALYSIS_SCHEMA = {
 class MultimodalEarthquakeCRAG:
     def __init__(self):
         self.mmi_retriever = MMIRetriever()
-        self.web_search_tool = TavilySearchResults(k=3,TAVILY_API_KEY=TRAVILY_API_KEY)
+        self.web_search_tool = TavilySearchResults(k=3,tavily_api_key=TRAVILY_API_KEY)
         self.setup_graph()
 
     def setup_graph(self):
@@ -336,7 +337,7 @@ class MultimodalEarthquakeCRAG:
         
         Provide complete seismic analysis for {blob_name} including:
         - Detailed description of damages and observations
-        - Location information (use "Unknown" if not determinable)  
+        - Must extract Location information [latitude, longitude] from the image (use "Unknown" if not determinable)  
         - Auditory and visual evidence summary
         - Building type and materials assessment
         - MMI estimation (as float) with detailed reasoning
@@ -369,6 +370,7 @@ class MultimodalEarthquakeCRAG:
             "generation": generation
         }
 
+    
 from google.cloud import bigquery
 projectID = os.environ['projectID']
 
@@ -395,9 +397,9 @@ if __name__ == "__main__":
         elif("mp4" in row["signed_url"]):
             video_urls.append((row["blob_name"], row["signed_url"]))
 
-    print("size: ", len(signed_urls))
-    print("size: ", len(image_without_location))
-    print("size: ", len(video_urls))
+    # print("size: ", len(signed_urls))
+    # print("size: ", len(image_without_location))
+    # print("size: ", len(video_urls))
 
     # tuple (blob, signed_url)
     quake_CRAG = MultimodalEarthquakeCRAG()
@@ -408,6 +410,21 @@ if __name__ == "__main__":
         mime_type="application/pdf")
     
     print(result["generation"])
+
     with open("sample_test.txt", 'w') as f:
         f.write(result["generation"])
+
+    lat = result["final_analysis"]["location"]["coordinates"][0]
+    lon = result["final_analysis"]["location"]["coordinates"][1]
+    mmi = result["final_analysis"]["mmi_estimation"]
+
+    # add point to map
+    with open("/Users/nular/Documents/Quakemap/server/assets/records.txt", "w") as f:
+        f.write(f"{lon} {lat} {mmi}\n")
+
+    # run gmt again to generate map
+    try:
+        subprocess.run(["plot.bat"])
+    except subprocess.CalledProcessError as e:
+        print("gmt failed: ", e)
 

@@ -1,0 +1,13 @@
+
+        EARTHQUAKE ASSESSMENT REPORT
+        ============================
+        File: test_page10.pdf
+        MMI Estimation: 9.0
+        Confidence: 0.9
+        
+        Description: Assessment of severe ground deformation, including extensive ground rupture, deep fissures, and significant land subsidence (approximately 3 feet), which has caused damage to a house foundation and a boundary wall. Visual evidence corroborates the direct impact of ground failure on structures.
+        Location: {'address': 'Unknown', 'coordinates': [0.0, 0.0]}
+        Building Type: Residential (likely single-family home) and ancillary structures such as boundary walls and foundations.
+        Evidence Analysis: The visual evidence unequivocally demonstrates severe ground deformation, including extensive ground rupture, deep fissures, and significant land subsidence (stated as ~3ft). This level of ground failure directly impacts structures, as seen with the damaged house foundation and boundary wall. The MMI reference documents for MMI IX describe 'Ground cracked conspicuously' and 'Buildings shifted off foundations; great in substantial buildings, with partial collapse.' While the main house structure might not show 'clear visible damage' from shaking, the severe ground deformation affecting its foundation and boundary wall aligns with structures being severely impacted or shifted from their original positions due to ground failure, which is a key characteristic of MMI IX.
+        Reasoning: The assessment of MMI IX (Violent Shaking) is based on the clear and extensive visual evidence of severe ground deformation. The presence of significant ground rupture, deep fissures, and approximately 3 feet of land subsidence directly aligns with the MMI IX description of 'Ground cracked conspicuously'. Furthermore, the observed damage to the house foundation and boundary wall, caused by this ground movement, is consistent with 'Buildings shifted off foundations' or 'heavily damaged' structures, as described for MMI IX. While the main house structure itself might not show 'clear visible damage' from shaking, the direct impact of ground failure on its foundation is a critical indicator of violent ground motion and severe structural distress, placing it firmly within the MMI IX range where ground failure is a dominant destructive mechanism.
+        
