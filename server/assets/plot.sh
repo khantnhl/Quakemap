@@ -9,7 +9,7 @@ PS_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.ps"
 PNG_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.png"
 INTERPOLATE_FILE="/Users/nular/Documents/Quakemap/server/assets/DYFI_city_points.txt"
 BOUNDS="-R91.89/99.2/13.0/26.4"     
-PROJECTION="-JM10c"
+PROJECTION="-JM8c"
 
 gmt blockmean "$INTERPOLATE_FILE" $BOUNDS -I2m > "$BLOCKMEAN_FILE"
 gmt surface "$BLOCKMEAN_FILE" -G"$GRID_FILE" -I2m $BOUNDS -T0.35

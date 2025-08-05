@@ -13,14 +13,24 @@ bq_client=None
 
 def lazy_clients() -> tuple[storage.Client, bigquery.Client]:
     global storage_client, bq_client
-    if storage_client is None:
-        credentials_path = "/Users/nular/Documents/Quakemap/server/gen-lang-client-0175492774.json"
-        credentials = service_account.Credentials.from_service_account_file(credentials_path)
-        storage_client = storage.Client(project=os.environ["GCS_PROJECT_ID"], credentials=credentials)
-    if bq_client is None:
-        credentials_path = "/Users/nular/Documents/Quakemap/server/gen-lang-client-0175492774.json"
-        credentials = service_account.Credentials.from_service_account_file(credentials_path)
-        bq_client = bigquery.Client(project=os.environ["GCS_PROJECT_ID"], credentials=credentials)
+
+    if storage_client is None or bq_client is None:
+        creds_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+
+        if not creds_json:
+            raise RuntimeError("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON env var")
+
+        # Write to temporary file
+        creds_path = "/tmp/gcp_creds.json"
+        with open(creds_path, "w") as f:
+            f.write(creds_json)
+
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = creds_path
+
+        if storage_client is None:
+            storage_client = storage.Client(project=os.environ["GCS_PROJECT_ID"])
+        if bq_client is None:
+            bq_client = bigquery.Client(project=os.environ["GCS_PROJECT_ID"])
     return storage_client, bq_client
 
 def upload_to_gcs(file: Union[str, UploadFile], bucketname = "earthquake_bukt", blob_name: str="placeholder") -> str:
