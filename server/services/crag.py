@@ -25,7 +25,20 @@ path = os.environ['filepath']
 projectID = os.environ['projectID']
 TRAVILY_API_KEY = os.environ['TAVILY_API_KEY']
 
-credentials = Credentials.from_service_account_file(path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+creds_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+
+if not creds_json:
+    raise RuntimeError("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable")
+
+# Write the JSON to a temp file
+creds_path = "/tmp/gcp_creds.json"
+with open(creds_path, "w") as f:
+    f.write(creds_json)
+
+# Load credentials
+credentials = Credentials.from_service_account_file(
+    creds_path, scopes=["https://www.googleapis.com/auth/cloud-platform"]
+)
 if credentials.expired:
     credentials.refresh(Request())
 
