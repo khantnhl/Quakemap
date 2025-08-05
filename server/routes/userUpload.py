@@ -1,5 +1,4 @@
 from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks, HTTPException, status
-import uuid, datetime as dt
 
 from services.utilities import upload_to_gcs, insert_row, insert_analysis, fetch_from_db
 from services.crag import MultimodalEarthquakeCRAG
@@ -39,7 +38,7 @@ def analyze_blob(blob_name: str, signed_url: str, mime_type: str):
     map_url = upload_to_gcs("/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.png", "earthquake_bukt", "mmi_mandalay_map.png")
 
     insert_analysis({
-        "blob_name": "mmi_mandalay_map.png",
+        "blob_name": blob_name,
         "mmi_estimation": result["final_analysis"]["mmi_estimation"],
         "confidence": result["final_analysis"]["confidence"],
         "map_url": map_url,
@@ -79,7 +78,7 @@ async def upload_file(
 @router_upload.get("/result/{blob_name}")
 def get_analysis(blob_name : str):
     
-    result = fetch_from_db(blob_name)  # implement this function
+    result = fetch_from_db(blob_name)  
 
     if result is None:
         raise HTTPException(status_code=404, detail="Analysis not ready yet")
