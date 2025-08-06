@@ -1,4 +1,4 @@
-import os
+import os, base64, json
 import vertexai
 import json
 from typing import List, Dict, Any
@@ -25,23 +25,21 @@ path = os.environ['filepath']
 projectID = os.environ['projectID']
 TRAVILY_API_KEY = os.environ['TAVILY_API_KEY']
 
-creds_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+creds_b64 = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
 
-if not creds_json:
+if not creds_b64:
     raise RuntimeError("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable")
 
-# Write the JSON to a temp file
-creds_path = "/tmp/gcp_creds.json"
-with open(creds_path, "w") as f:
-    f.write(creds_json)
+creds_info = json.loads(base64.b64decode(creds_b64))
 
 # Load credentials
-credentials = Credentials.from_service_account_file(
-    creds_path, scopes=["https://www.googleapis.com/auth/cloud-platform"]
+credentials = Credentials.from_service_account_info(
+    creds_info, scopes=["https://www.googleapis.com/auth/cloud-platform"]
 )
-if credentials.expired:
-    credentials.refresh(Request())
 
+if credentials.expired and credentials.refresh_token:
+    credentials.refresh(Request())
+    
 vertexai.init(project=projectID, location='us-central1', credentials=credentials)
 
 class State(TypedDict):
