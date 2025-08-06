@@ -1,13 +1,14 @@
 #!/bin/bash
 
-INPUT_FILE="/Users/nular/Documents/Quakemap/server/assets/records.txt"
-STATION_FILE="/Users/nular/Documents/Quakemap/server/assets/stations.txt"
-BLOCKMEAN_FILE="/Users/nular/Documents/Quakemap/server/assets/blockmean.txt"
-GRID_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_surface.nc"
-CPT_FILE="/Users/nular/Documents/Quakemap/server/assets/shake.cpt"
-PS_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.ps"
-PNG_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.png"
-INTERPOLATE_FILE="/Users/nular/Documents/Quakemap/server/assets/DYFI_city_points.txt"
+INPUT_FILE="./assets/records.txt"
+STATION_FILE="./assets/stations.txt"
+BLOCKMEAN_FILE="./assets/blockmean.txt"
+GRID_FILE="./assets/mmi_surface.nc"
+CPT_FILE="./assets/shake.cpt"
+PS_FILE="./assets/mmi_mandalay_map.ps"
+PNG_FILE="./assets/mmi_mandalay_map.png"
+INTERPOLATE_FILE="./assets/DYFI_city_points.txt"
+
 BOUNDS="-R91.89/99.2/13.0/26.4"     
 PROJECTION="-JM8c"
 

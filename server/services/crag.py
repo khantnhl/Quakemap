@@ -37,9 +37,6 @@ credentials = Credentials.from_service_account_info(
     creds_info, scopes=["https://www.googleapis.com/auth/cloud-platform"]
 )
 
-if credentials.expired and credentials.refresh_token:
-    credentials.refresh(Request())
-
 vertexai.init(project=projectID, location='us-central1', credentials=credentials)
 
 class State(TypedDict):
@@ -430,7 +427,7 @@ if __name__ == "__main__":
     mmi = result["final_analysis"]["mmi_estimation"]
 
     # add point to map
-    with open("/Users/nular/Documents/Quakemap/server/assets/records.txt", "w") as f:
+    with open("./assets/records.txt", "w") as f:
         f.write(f"{lon} {lat} {mmi}\n")
 
     # run gmt again to generate map

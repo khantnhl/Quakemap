@@ -1,16 +1,16 @@
 import os
 
 # Input: Mandalay earthquake MMI file
-INPUT_DATA_FILE = "/Users/nular/Documents/Quakemap/server/assets/records.txt"
-STATION_DATA_FILE = "/Users/nular/Documents/Quakemap/server/assets/stations.txt"
-OUTPUT_PS_FILE = "/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.ps"
-OUTPUT_PNG_FILE = "/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.png"
-INTERPOLATE = "/Users/nular/Documents/Quakemap/server/assets/DYFI_city_points.txt"
+INPUT_DATA_FILE = "./assets/records.txt"
+STATION_DATA_FILE = "./assets/stations.txt"
+OUTPUT_PS_FILE = "./assets/mmi_mandalay_map.ps"
+OUTPUT_PNG_FILE = "./assets/mmi_mandalay_map.png"
+INTERPOLATE = "./assets/DYFI_city_points.txt"
 
-GRID_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_surface.nc"
-CPT_FILE="/Users/nular/Documents/Quakemap/server/assets/shake.cpt"
-PNG_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.png"
-PS_FILE="/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.ps"
+GRID_FILE="./assets/mmi_surface.nc"
+CPT_FILE="./assets/shake.cpt"
+PNG_FILE="./assets/mmi_mandalay_map.png"
+PS_FILE="./assets/mmi_mandalay_map.ps"
 
 SHAKEMAP_CPT = """
 0    0 0 0 1    255 255 255
@@ -29,7 +29,7 @@ F    255 255 255
 """
 
 def generate_gmt_script():
-    with open('/Users/nular/Documents/Quakemap/server/assets/shake.cpt', 'w') as f:
+    with open('./assets/shake.cpt', 'w') as f:
         f.write(SHAKEMAP_CPT)
 
     # Manually define bounds centered on Mandalay
