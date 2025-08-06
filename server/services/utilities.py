@@ -20,7 +20,7 @@ def lazy_clients() -> tuple[storage.Client, bigquery.Client]:
         if not creds_b64:
             raise RuntimeError("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON env var")
 
-        creds_info = json.loads(base64.b64decode(creds_b64))
+        creds_info = json.loads(base64.b64decode(creds_b64).decode("utf-8"))
         credentials = service_account.Credentials.from_service_account_info(
             creds_info, scopes=["https://www.googleapis.com/auth/cloud-platform"]
         )

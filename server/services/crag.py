@@ -30,7 +30,7 @@ creds_b64 = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
 if not creds_b64:
     raise RuntimeError("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable")
 
-creds_info = json.loads(base64.b64decode(creds_b64))
+creds_info = json.loads(base64.b64decode(creds_b64).decode("utf-8"))
 
 # Load credentials
 credentials = Credentials.from_service_account_info(
@@ -39,7 +39,7 @@ credentials = Credentials.from_service_account_info(
 
 if credentials.expired and credentials.refresh_token:
     credentials.refresh(Request())
-    
+
 vertexai.init(project=projectID, location='us-central1', credentials=credentials)
 
 class State(TypedDict):
