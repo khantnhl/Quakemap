@@ -1,4 +1,4 @@
-import os
+import os, json, base64
 from google.cloud import storage, bigquery
 from fastapi import UploadFile
 import datetime as dt
@@ -15,22 +15,20 @@ def lazy_clients() -> tuple[storage.Client, bigquery.Client]:
     global storage_client, bq_client
 
     if storage_client is None or bq_client is None:
-        creds_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
-
-        if not creds_json:
+        
+        creds_b64 = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+        if not creds_b64:
             raise RuntimeError("Missing GOOGLE_APPLICATION_CREDENTIALS_JSON env var")
 
-        # Write to temporary file
-        creds_path = "/tmp/gcp_creds.json"
-        with open(creds_path, "w") as f:
-            f.write(creds_json)
-
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = creds_path
+        creds_info = json.loads(base64.b64decode(creds_b64))
+        credentials = service_account.Credentials.from_service_account_info(
+            creds_info, scopes=["https://www.googleapis.com/auth/cloud-platform"]
+        )
 
         if storage_client is None:
-            storage_client = storage.Client(project=os.environ["GCS_PROJECT_ID"])
+            storage_client = storage.Client(project=os.environ["GCS_PROJECT_ID"],credentials=credentials)
         if bq_client is None:
-            bq_client = bigquery.Client(project=os.environ["GCS_PROJECT_ID"])
+            bq_client = bigquery.Client(project=os.environ["GCS_PROJECT_ID"], credentials=credentials)
     return storage_client, bq_client
 
 def upload_to_gcs(file: Union[str, UploadFile], bucketname = "earthquake_bukt", blob_name: str="placeholder") -> str:
