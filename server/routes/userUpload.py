@@ -26,16 +26,16 @@ def analyze_blob(blob_name: str, signed_url: str, mime_type: str):
     mmi = result["final_analysis"]["mmi_estimation"]
 
     # add point to map
-    with open("/Users/nular/Documents/Quakemap/server/assets/records.txt", "a") as f:
+    with open("./assets/records.txt", "a") as f:
         f.write(f"{lon} {lat} {mmi}\n")
 
     # run gmt again to generate map
     try:
-        subprocess.run(["/Users/nular/Documents/Quakemap/server/assets/plot.sh"])
+        subprocess.run(["./assets/plot.sh"])
     except subprocess.CalledProcessError as e:
         print("gmt failed: ", e)
 
-    map_url = upload_to_gcs("/Users/nular/Documents/Quakemap/server/assets/mmi_mandalay_map.png", "earthquake_bukt", "mmi_mandalay_map.png")
+    map_url = upload_to_gcs("./assets/mmi_mandalay_map.png", "earthquake_bukt", "mmi_mandalay_map.png")
 
     insert_analysis({
         "blob_name": blob_name,
