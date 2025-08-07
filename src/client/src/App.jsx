@@ -1,5 +1,5 @@
 import './App.css'
-import UserUpload from './components/userUpload'
+import UserUpload from './components/UserUpload'
 import { useState } from 'react';
 import Card from './components/Card';
 
