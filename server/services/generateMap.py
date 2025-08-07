@@ -66,7 +66,7 @@ def generate_gmt_script():
         f.write(f"PNG_FILE=\"{OUTPUT_PNG_FILE}\"\n")
         f.write(f"INTERPOLATE_FILE=\"{INTERPOLATE}\"\n")
         f.write(f"BOUNDS=\"{bounds}\"\n")
-        f.write("PROJECTION=\"-JM10c\"\n\n")
+        f.write("PROJECTION=\"-JM8c\"\n\n")
 
         f.write("gmt blockmean \"$INTERPOLATE_FILE\" $BOUNDS -I2m > \"$BLOCKMEAN_FILE\"\n")
         f.write("gmt surface \"$BLOCKMEAN_FILE\" -G\"$GRID_FILE\" -I2m $BOUNDS -T0.35\n")
