@@ -15,7 +15,7 @@ export default function Card({ fileName }) {
         setLoading(true);
         setError(null);
         
-        const res = await fetch(`http://127.0.0.1:8000/result/${fileName}`);
+        const res = await fetch(`https://quakemap.onrender.com/result/${fileName}`);
         
         if (!isMounted) return;
 
