@@ -55,7 +55,7 @@ def generate_gmt_script():
     # bounds = f"-R{min_lon}/{max_lon}/{min_lat}/{max_lat}"
 
     # unix style shell script
-    with open('plot.sh', 'w') as f:
+    with open('./assets/plot.sh', 'w') as f:
         f.write("#!/bin/bash\n\n")
         f.write(f"INPUT_FILE=\"{INPUT_DATA_FILE}\"\n")
         f.write(f"STATION_FILE=\"{STATION_DATA_FILE}\"\n")
@@ -80,8 +80,8 @@ def generate_gmt_script():
         f.write("rm -f \"$BLOCKMEAN_FILE\" \"$GRID_FILE\"\n")
         f.write("echo '✅ Done. PNG map saved as $PNG_FILE'\n")
 
-    os.system("chmod +x plot.sh")
+    # os.system("chmod +x plot.sh")
 
-if __name__ == '__main__':
-    generate_gmt_script()
-    print("Run: plot.sh")
+# if __name__ == '__main__':
+#     generate_gmt_script()
+#     print("Run: plot.sh")
