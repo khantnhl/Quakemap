@@ -74,7 +74,7 @@ def generate_gmt_script():
         f.write("gmt grdimage \"$GRID_FILE\" -C\"$CPT_FILE\" $BOUNDS $PROJECTION -O -K >> \"$PS_FILE\"\n")
         f.write("gmt pscoast $BOUNDS $PROJECTION -Dh -W0.5p,black -Slightblue -Na/0.25p,gray -O -K >> \"$PS_FILE\"\n")
         f.write("gmt psxy \"$INPUT_FILE\" $BOUNDS $PROJECTION -Sc0.45c -C\"$CPT_FILE\" -W0.25p,black -O -K >> \"$PS_FILE\"\n")
-        f.write("gmt psxy \"$STATION_FILE\" $BOUNDS $PROJECTION -St0.5c -Gblack -W0.3p,black -O -K >> \"$PS_FILE\"\n")
+        f.write("gmt psxy \"$STATION_FILE\" $BOUNDS $PROJECTION -St0.6c -C\"$CPT_FILE\" -W0.5p,black -h1 -O -K >> \"$PS_FILE\"\n")
         f.write("gmt psscale -C\"$CPT_FILE\" -Dx8c/-1.2c+w10c/0.5c+jTC+h -Bx2+l\"MMI\" -O >> \"$PS_FILE\"\n")
         f.write("gmt psconvert \"$PS_FILE\" -A1.0c -Tg -P\n")
         f.write("rm -f \"$BLOCKMEAN_FILE\" \"$GRID_FILE\"\n")
