@@ -1,5 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks, HTTPException, status
 
+from services.generateMap import generate_gmt_script
 from services.utilities import upload_to_gcs, insert_row, insert_analysis, fetch_from_db
 from services.crag import MultimodalEarthquakeCRAG
 import subprocess
@@ -31,7 +32,7 @@ def analyze_blob(blob_name: str, signed_url: str, mime_type: str):
 
     # run gmt again to generate map
     try:
-        subprocess.run(["./assets/plot.sh"])
+        subprocess.run(["plot.sh"])
     except subprocess.CalledProcessError as e:
         print("gmt failed: ", e)
 
