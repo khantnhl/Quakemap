@@ -32,7 +32,7 @@ def analyze_blob(blob_name: str, signed_url: str, mime_type: str):
 
     # run gmt again to generate map
     try:
-        subprocess.run(["plot.sh"])
+        subprocess.run(["./assets/plot.sh"])
     except subprocess.CalledProcessError as e:
         print("gmt failed: ", e)
 
