@@ -1,5 +1,4 @@
 import os
-
 # Input: Mandalay earthquake MMI file
 INPUT_DATA_FILE = "./assets/records.txt"
 STATION_DATA_FILE = "./assets/stations.txt"
@@ -80,7 +79,7 @@ def generate_gmt_script():
         f.write("rm -f \"$BLOCKMEAN_FILE\" \"$GRID_FILE\"\n")
         f.write("echo '✅ Done. PNG map saved as $PNG_FILE'\n")
 
-    # os.system("chmod +x plot.sh")
+    os.system("chmod +x plot.sh")
 
 # if __name__ == '__main__':
 #     generate_gmt_script()
